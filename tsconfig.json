@@ -27,7 +27,10 @@
     "jsx": "react-jsx",
     "incremental": true,
     "tsBuildInfoFile": "./.cache/.tsbuildinfo",
-    "allowImportingTsExtensions": true
+    "allowImportingTsExtensions": true,
+    "paths": {
+      "assets/*": ["./public/assets/*"],
+    }
   },
   "include": ["src"]
 }
