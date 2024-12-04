@@ -1,20 +1,21 @@
-import { useLayoutEffect } from "react";
-import { Route, Routes, useLocation } from "react-router";
+import {FC, useEffect} from "react";
+import {Route, Routes, useLocation} from "react-router";
 import NotFound from "./NotFound";
 import OnboardingPage from "./Onboarding";
 import Loading from "./Loading";
 import Welcome from "./Welcome";
+import Login from "./login";
 
 
-const ScrollToTop: React.FC<{children: JSX.Element}> = ({children}) => {
+const ScrollToTop: FC<{children: JSX.Element}> = ({children}) => {
     const location = useLocation();
-    useLayoutEffect(() => {
+    useEffect(() => {
       document.documentElement.scrollTo(0, 0);
     }, [location.pathname]);
     return children
 }
 
-const Router: React.FC<{}> = () => {
+const Router: FC = () => {
     return (
         <ScrollToTop>
             <Routes>
@@ -34,9 +35,11 @@ const Router: React.FC<{}> = () => {
                     path="*" 
                     element={ <NotFound /> }
                 />
+                <Route path='/login' element={<Login/>}/>
             </Routes>
         </ScrollToTop>
     )
 }
+
 
 export default Router;
