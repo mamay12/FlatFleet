@@ -5,8 +5,13 @@ import "../styles/_onboarding.sass"
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { FolderViewOutlined } from '@ant-design/icons';
+import {useNavigate} from "react-router";
 
 const OnboardingPage: React.FC = () => {
+    const navigate = useNavigate();
+
+    const handleClick = () => navigate('/login')
+
     return (
         <div className="onboarding">
             <Swiper
@@ -47,7 +52,7 @@ const OnboardingPage: React.FC = () => {
                     <p>Lorem ipsum dolor sit amet consectetur. Mi enim dignissim vitae quam quis fringilla</p>
                 </SwiperSlide>
             </Swiper>
-            <button className="get-started-btn">Get started</button>
+            <button className="get-started-btn" onClick={handleClick}>Get started</button>
         </div>
     );
 };

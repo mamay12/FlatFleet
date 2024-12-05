@@ -1,16 +1,15 @@
-import { FC, useEffect } from "react";
-import { Route, Routes, useLocation } from "react-router";
-import NotFound from "./NotFound";
+import {FC, useEffect} from "react";
+import {Route, Routes, useLocation} from "react-router";
+import NotFound from "./shared/NotFound.tsx";
 import OnboardingPage from "./Onboarding";
-import Loading from "./Loading";
-import Welcome from "./Welcome";
-import Login from "./login";
-import VerifyEmail from "./VerifyEmail";
-import RecoverPassword from "./RecoverPassword";
-import SetPassword from "./SetPassword";
-import SetPasswordSuccess from "./SetPasswordSccess";
+import Loading from "./shared/Loading.tsx";
+import Welcome from "./shared/Welcome.tsx";
+import RecoverPassword from "./password-recovery";
+import SetPasswordSuccess from "./password-recovery/SetPasswordSuccess.tsx";
 import StartScreenPage from "./StartScreen.tsx";
-import SignUpPage from "./register";
+import ChooseAccountTypePage from "./account";
+import SignInPage from "./sign-in";
+import SignUpPage from "./sign-up";
 
 const ScrollToTop: FC<{ children: JSX.Element }> = ({children}) => {
     const location = useLocation();
@@ -37,25 +36,17 @@ const Router: FC = () => {
                     path="/welcome"
                     element={<Welcome/>}
                 />
-              <Route
-                    path="/verify-email"
-                    element={<VerifyEmail />}
-                />
                 <Route
                     path="/recover-password"
-                    element={<RecoverPassword />}
-                />
-                <Route
-                    path="/set-password"
-                    element={<SetPassword />}
+                    element={<RecoverPassword/>}
                 />
                 <Route
                     path="/set-password-success"
-                    element={<SetPasswordSuccess />}
+                    element={<SetPasswordSuccess/>}
                 />
                 <Route
                     path='/login'
-                    element={<Login/>}
+                    element={<SignInPage/>}
                 />
                 <Route
                     path='/register'
@@ -65,6 +56,7 @@ const Router: FC = () => {
                     path="*"
                     element={<NotFound/>}
                 />
+                <Route path="/chooseType" element={<ChooseAccountTypePage/>}/>
             </Routes>
         </ScrollToTop>
     )

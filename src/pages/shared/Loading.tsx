@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import Logo from '../components/Logo';
+import Logo from '../../components/Logo.tsx';
 
 const Loading: React.FC = () => {
     const [dots, setDots] = useState('.');
