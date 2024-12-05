@@ -4,8 +4,8 @@ import {useNavigate} from "react-router";
 
 const {Title, Text} = Typography;
 
-const StartScreen = () => {
-   
+const StartScreenPage = () => {
+
     const navigate = useNavigate()
 
     const handleGetStartedClick = () => navigate("/onboarding")
@@ -59,4 +59,4 @@ const StartScreen = () => {
     );
 };
 
-export default StartScreen
+export default StartScreenPage

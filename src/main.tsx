@@ -8,7 +8,7 @@ import "./styles/index.sass";
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
         <BrowserRouter>
-            <Router />
+            <Router/>
         </BrowserRouter>
     </StrictMode>,
 )
