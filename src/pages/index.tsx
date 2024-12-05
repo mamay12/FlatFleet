@@ -1,13 +1,16 @@
-import {FC, useEffect} from "react";
-import {Route, Routes, useLocation} from "react-router";
+import { FC, useEffect } from "react";
+import { Route, Routes, useLocation } from "react-router";
 import NotFound from "./NotFound";
 import OnboardingPage from "./Onboarding";
 import Loading from "./Loading";
 import Welcome from "./Welcome";
 import Login from "./login";
+import VerifyEmail from "./VerifyEmail";
+import RecoverPassword from "./RecoverPassword";
+import SetPassword from "./SetPassword";
+import SetPasswordSuccess from "./SetPasswordSccess";
 import StartScreenPage from "./StartScreen.tsx";
 import SignUpPage from "./register";
-
 
 const ScrollToTop: FC<{ children: JSX.Element }> = ({children}) => {
     const location = useLocation();
@@ -34,12 +37,34 @@ const Router: FC = () => {
                     path="/welcome"
                     element={<Welcome/>}
                 />
+              <Route
+                    path="/verify-email"
+                    element={<VerifyEmail />}
+                />
+                <Route
+                    path="/recover-password"
+                    element={<RecoverPassword />}
+                />
+                <Route
+                    path="/set-password"
+                    element={<SetPassword />}
+                />
+                <Route
+                    path="/set-password-success"
+                    element={<SetPasswordSuccess />}
+                />
+                <Route
+                    path='/login'
+                    element={<Login/>}
+                />
+                <Route
+                    path='/register'
+                    element={<SignUpPage/>}
+                />
                 <Route
                     path="*"
                     element={<NotFound/>}
                 />
-                <Route path='/login' element={<Login/>}/>
-                <Route path='/register' element={<SignUpPage/>}/>
             </Routes>
         </ScrollToTop>
     )
