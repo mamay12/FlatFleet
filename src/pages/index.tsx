@@ -1,16 +1,20 @@
-import {FC, useEffect} from "react";
-import {Route, Routes, useLocation} from "react-router";
+import { FC, useEffect } from "react";
+import { Route, Routes, useLocation } from "react-router";
 import NotFound from "./NotFound";
 import OnboardingPage from "./Onboarding";
 import Loading from "./Loading";
 import Welcome from "./Welcome";
 import Login from "./login";
+import VerifyEmail from "./VerifyEmail";
+import RecoverPassword from "./RecoverPassword";
+import SetPassword from "./SetPassword";
+import SetPasswordSuccess from "./SetPasswordSccess";
 
 
-const ScrollToTop: FC<{children: JSX.Element}> = ({children}) => {
+const ScrollToTop: FC<{ children: JSX.Element }> = ({ children }) => {
     const location = useLocation();
     useEffect(() => {
-      document.documentElement.scrollTo(0, 0);
+        document.documentElement.scrollTo(0, 0);
     }, [location.pathname]);
     return children
 }
@@ -25,17 +29,33 @@ const Router: FC = () => {
                 />
                 <Route
                     path="/loading"
-                    element={ <Loading /> } 
+                    element={<Loading />}
                 />
                 <Route
                     path="/welcome"
-                    element={ <Welcome /> } 
+                    element={<Welcome />}
                 />
                 <Route
-                    path="*" 
-                    element={ <NotFound /> }
+                    path="/verify-email"
+                    element={<VerifyEmail />}
                 />
-                <Route path='/login' element={<Login/>}/>
+                <Route
+                    path="/recover-password"
+                    element={<RecoverPassword />}
+                />
+                <Route
+                    path="/set-password"
+                    element={<SetPassword />}
+                />
+                <Route
+                    path="/set-password-success"
+                    element={<SetPasswordSuccess />}
+                />
+                <Route
+                    path="*"
+                    element={<NotFound />}
+                />
+                <Route path='/login' element={<Login />} />
             </Routes>
         </ScrollToTop>
     )
