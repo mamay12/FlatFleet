@@ -1,103 +1,110 @@
-import {
-    Button,
-    Input,
-    Form,
-    Divider,
-    Checkbox,
-    Typography,
-    Space
-} from "antd";
-import {
-    MailOutlined,
-    LockOutlined,
-} from "@ant-design/icons";
+import {Button, Checkbox, Divider, Form, Input, message, Space, Typography} from "antd";
+import {LockOutlined, MailOutlined,} from "@ant-design/icons";
 import HeaderImage from "../../components/login/HeaderImage.tsx";
 import LoginWithButtons from "../../components/login/buttons/LoginWithButtons.tsx";
+import {NavLink} from "react-router";
+import {signInWithEmailAndPassword} from "firebase/auth";
+import {auth, db} from "../../utils/firebase";
+import {doc, getDoc} from "firebase/firestore";
 
 import('../../styles/_vars.sass')
-
+import "../../styles/_sign-in.sass"
 
 const {Title, Text, Link} = Typography;
 
 
-const LoginPage = () => {
-    const onFinish = (values: any) => {
-        console.log("Form values: ", values);
+interface FormData {
+    email: string
+    password: string
+}
+
+const SignInPage = () => {
+    const handleLogin = async ({password, email}: FormData) => {
+        try {
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+
+            const userDoc = await getDoc(doc(db, "users", user.uid));
+
+            if (userDoc.exists()) {
+                const userData = auth.currentUser;
+                message.success(`Welcome, ${userData?.displayName}!`);
+            } else {
+                message.error("User not exists");
+            }
+        } catch (error) {
+            console.error("Login error:", error);
+        }
     };
 
     return (
+        <>
+        <HeaderImage/>
+
         <div
-            style={{
-                margin: "0 auto",
-                padding: "20px",
-                textAlign: "center",
-                backgroundColor: "#fff",
-                borderRadius: "8px",
-                boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
-            }}
+            className="screen-container"
         >
-            <HeaderImage/>
-            <div style={{marginBottom: 20}}>
+            <div className="formContainer">
                 <Title level={3}>Welcome</Title>
                 <Text type="secondary">Sign in to continue</Text>
-            </div>
-            <LoginWithButtons/>
-            <Divider>
-                <Text>or</Text>
-            </Divider>
-
-            <Form
-                layout="vertical"
-                onFinish={onFinish}
-                style={{textAlign: "left"}}
-            >
-                <Form.Item
-                    name="email"
-                    rules={[{required: true, message: "Please input your email!"}]}
+                <div>
+                    <LoginWithButtons/>
+                </div>
+                <Divider>
+                    <Text>or</Text>
+                </Divider>
+                <Form
+                    layout="vertical"
+                    onFinish={handleLogin}
                 >
-                    <Input
-                        size="large"
-                        placeholder="Email"
-                        prefix={<MailOutlined/>}
-                    />
-                </Form.Item>
-
-                <Form.Item
-                    name="password"
-                    rules={[{required: true, message: "Please input your password!"}]}
-                >
-                    <Input.Password
-                        size="large"
-                        placeholder="Password"
-                        prefix={<LockOutlined/>}
-                    />
-                </Form.Item>
-
-                <Form.Item>
-                    <Space
-                        style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            marginBottom: 10,
-                        }}
+                    <Form.Item
+                        name="email"
+                        rules={[{required: true, message: "Please input your email!"}]}
                     >
-                        <Checkbox>Remember me</Checkbox>
-                        <Link href="#">Forgot password?</Link>
-                    </Space>
-                </Form.Item>
+                        <Input
+                            size="large"
+                            placeholder="Email"
+                            prefix={<MailOutlined/>}
+                        />
+                    </Form.Item>
 
-                <Form.Item>
-                    <Button type="primary" htmlType="submit" block size="large">
-                        Continue
-                    </Button>
-                </Form.Item>
-            </Form>
+                    <Form.Item
+                        name="password"
+                        rules={[{required: true, message: "Please input your password!"}]}
+                    >
+                        <Input.Password
+                            size="large"
+                            placeholder="Password"
+                            prefix={<LockOutlined/>}
+                        />
+                    </Form.Item>
 
-            <Text>
-                Don’t have an account? <Link href="#">Sign up</Link>
-            </Text>
+                    <Form.Item>
+                        <Space
+                            style={{
+                                display: "flex",
+                                justifyContent: "space-between",
+                                marginBottom: 10,
+                            }}
+                        >
+                            <Checkbox>Remember me</Checkbox>
+                            <Link href="#">Forgot password?</Link>
+                        </Space>
+                    </Form.Item>
+
+                    <Form.Item>
+                        <Button type="primary" htmlType="submit" block size="large">
+                            Continue
+                        </Button>
+                    </Form.Item>
+                </Form>
+                <Text>
+                    Don’t have an account? <NavLink to='/register'>Sign up</NavLink>
+                </Text>
+            </div>
         </div>
+        </>
     );
 };
 
-export default LoginPage;
+export default SignInPage;

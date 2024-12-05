@@ -4,16 +4,14 @@ import {signInWithPopup} from 'firebase/auth'
 import {auth, googleProvider} from "../../../../utils/firebase";
 
 function LoginWithGoogle() {
+
     const handleGoogleLogin = async () => {
         try {
-            const result = await signInWithPopup(auth, googleProvider);
-            const user = result.user;
-            console.log("User info:", user);
+            await signInWithPopup(auth, googleProvider);
         } catch (error) {
             console.error("Error during login:", error);
         }
     };
-
 
     return (
         <Button

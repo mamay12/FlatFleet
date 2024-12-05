@@ -4,6 +4,7 @@ function HeaderImage() {
         <div
             style={{
                 position: "relative",
+                width:"100%",
                 marginBottom: 20,
             }}
         >

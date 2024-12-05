@@ -9,9 +9,10 @@ import VerifyEmail from "./VerifyEmail";
 import RecoverPassword from "./RecoverPassword";
 import SetPassword from "./SetPassword";
 import SetPasswordSuccess from "./SetPasswordSccess";
+import StartScreenPage from "./StartScreen.tsx";
+import SignUpPage from "./register";
 
-
-const ScrollToTop: FC<{ children: JSX.Element }> = ({ children }) => {
+const ScrollToTop: FC<{ children: JSX.Element }> = ({children}) => {
     const location = useLocation();
     useEffect(() => {
         document.documentElement.scrollTo(0, 0);
@@ -23,19 +24,20 @@ const Router: FC = () => {
     return (
         <ScrollToTop>
             <Routes>
+                <Route index element={<StartScreenPage/>}/>
                 <Route
                     path="/onboarding"
-                    element={<OnboardingPage />}
+                    element={<OnboardingPage/>}
                 />
                 <Route
                     path="/loading"
-                    element={<Loading />}
+                    element={<Loading/>}
                 />
                 <Route
                     path="/welcome"
-                    element={<Welcome />}
+                    element={<Welcome/>}
                 />
-                <Route
+              <Route
                     path="/verify-email"
                     element={<VerifyEmail />}
                 />
@@ -52,10 +54,17 @@ const Router: FC = () => {
                     element={<SetPasswordSuccess />}
                 />
                 <Route
-                    path="*"
-                    element={<NotFound />}
+                    path='/login'
+                    element={<Login/>}
                 />
-                <Route path='/login' element={<Login />} />
+                <Route
+                    path='/register'
+                    element={<SignUpPage/>}
+                />
+                <Route
+                    path="*"
+                    element={<NotFound/>}
+                />
             </Routes>
         </ScrollToTop>
     )
