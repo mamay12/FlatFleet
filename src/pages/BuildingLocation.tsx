@@ -1,11 +1,10 @@
-import { AutoComplete, Typography, Button } from 'antd';
-import { LeftOutlined, CloseCircleOutlined, EnvironmentOutlined, SearchOutlined, LoadingOutlined } from '@ant-design/icons';
-import { useNavigate } from 'react-router';
+import {AutoComplete, Button, Typography} from 'antd';
+import {LeftOutlined, LoadingOutlined, SearchOutlined} from '@ant-design/icons';
+import {useNavigate} from 'react-router';
 import '../styles/_buildingLocation.sass';
-import GooglePlacesAutocomplete from '../components/PlacesAutocomplete';
 import usePlacesService from "react-google-autocomplete/lib/usePlacesAutocompleteService";
-import { CircledIcon } from '../components/CircledIcon';
-import { useEffect, useState } from 'react';
+import {CircledIcon} from '../components/CircledIcon';
+import {useEffect, useState} from 'react';
 
 const API_KEY = "AIzaSyB4vfe1nYsVoGCdnZV1AGagrmzifTk0o80";
 

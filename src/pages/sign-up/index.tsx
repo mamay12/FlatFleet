@@ -11,12 +11,13 @@ import HeaderImage from "../../components/login/HeaderImage.tsx";
 import "../../styles/_sign-up.sass"
 import {createUserWithEmailAndPassword, updateProfile} from "firebase/auth";
 import {auth, db} from "../../utils/firebase";
-import {doc, setDoc } from "firebase/firestore";
+import {doc, setDoc} from "firebase/firestore";
 import {NavLink} from "react-router";
+import {useState} from "react";
+import PrivacyPolicy from "./PrivacyPolicy.tsx";
+import TermsOfService from "./TermsOfService.tsx";
 
 const {Title, Text} = Typography;
-
-import "../../styles/_sign-up.sass"
 
 interface Form {
     fullName: string
@@ -27,13 +28,18 @@ interface Form {
 
 const SignUpPage = () => {
     const onFinish = async (values: Form) => {
-        const {fullName, email, password,phoneNumber} = values;
+        const {fullName, email, password, phoneNumber} = values;
 
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const user = userCredential.user
 
-            await setDoc(doc(db, "users", user.uid), {fullname: fullName, email: email, password: password, phone: phoneNumber})
+            await setDoc(doc(db, "users", user.uid), {
+                fullname: fullName,
+                email: email,
+                password: password,
+                phone: phoneNumber
+            })
 
             await updateProfile(userCredential.user, {displayName: fullName});
 
@@ -42,6 +48,17 @@ const SignUpPage = () => {
             console.error("Error during registration:", error);
         }
     };
+
+    const [privacyOpen, setPrivacyOpen] = useState(false);
+
+    const handlePrivacyOpen = () => {
+        setPrivacyOpen(true)
+    }
+    const [termsOfService, setTermsOfService] = useState(false);
+
+    const handleTermsOfServiceOpen = () => {
+        setTermsOfService(true)
+    }
 
     return (
         <div className="screen-container">
@@ -104,7 +121,7 @@ const SignUpPage = () => {
 
                     <Text className="agreement">
                         By selecting Create Account below, I agree to{" "}
-                        <a href="#">Terms of Service</a> & <a href="#">Privacy Policy</a>
+                        <a href="#" onClick={handleTermsOfServiceOpen}>Terms of Service</a> & <a href="#" onClick={handlePrivacyOpen}>Privacy Policy</a>
                     </Text>
 
                     <Form.Item>
@@ -124,6 +141,8 @@ const SignUpPage = () => {
                     Already have an account? <NavLink to='/login'>Sign in</NavLink>
                 </Text>
             </div>
+            <PrivacyPolicy open={privacyOpen} setOpen={setPrivacyOpen}/>
+            <TermsOfService open={termsOfService} setOpen={setTermsOfService}/>
         </div>
     );
 };

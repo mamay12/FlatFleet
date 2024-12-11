@@ -1,19 +1,24 @@
-import { useState } from 'react';
-import { Input, Button, Typography } from 'antd';
-import { LeftOutlined } from '@ant-design/icons';
-import { useNavigate } from 'react-router';
-import Logo from '../components/Logo';
+import {useState} from 'react';
+import {Button, Input, Typography} from 'antd';
+import {LeftOutlined} from '@ant-design/icons';
+import {useNavigate} from 'react-router';
 
-import "../styles/_verifyEmail.sass";
-import { CircledIcon } from '../components/CircledIcon';
+import "../../styles/_verifyEmail.sass";
+import {CircledIcon} from '../../components/CircledIcon.tsx';
+import SetPassword from "./SetPassword.tsx";
 
-const { Title, Text, Link } = Typography;
+const {Title, Text, Link} = Typography;
 
-const VerifyEmail: React.FC = () => {
-    const email = "<user email here>"
+interface VerifyEmailProps {
+    email: string;
+}
+
+function VerifyEmail({email}: VerifyEmailProps) {
     const [loading, setLoading] = useState(false);
     const [code, setCode] = useState(['', '', '', '']);
     const navigate = useNavigate();
+
+    const [verified, setVerified] = useState(false);
 
     const handleCodeChange = (index: number, value: string) => {
         if (value.length <= 1 && /^\d*$/.test(value)) {
@@ -21,7 +26,6 @@ const VerifyEmail: React.FC = () => {
             newCode[index] = value;
             setCode(newCode);
 
-            // Auto-focus next input
             if (value && index < 3) {
                 const nextInput = document.getElementById(`code-${index + 1}`);
                 nextInput?.focus();
@@ -30,21 +34,23 @@ const VerifyEmail: React.FC = () => {
     };
 
     const submitCode = async () => {
-        setLoading(true);
-        const parsedCode = code.join("");
-        console.log(`Code: ${parsedCode}, Email: ${email}`)
-    }
+        setLoading(true)
+        setTimeout(() => {
+            setVerified(true)
+        }, 3000)
+    };
+
 
     const isCodeValid = !code.some(c => c === "");
 
-    return (
+    return verified ? <SetPassword email={email}/> : (
         <div className="verify-email">
             <button className="back-button" onClick={() => navigate(-1)}>
-                <LeftOutlined /> Back
+                <LeftOutlined/> Back
             </button>
 
             <div className="content">
-                <CircledIcon src="/assets/mail-at.svg" />
+                <CircledIcon src="/assets/mail-at.svg"/>
                 <Title level={2}>Verify your email</Title>
                 <Text>Please enter the 4 code sent to</Text>
                 <Text strong>{email}</Text>
@@ -64,9 +70,9 @@ const VerifyEmail: React.FC = () => {
                 <Button
                     type="primary"
                     disabled={!isCodeValid}
-                    block 
+                    block
                     size="large"
-                    loading={loading} 
+                    loading={loading}
                     onClick={submitCode}
                     children="Submit"
                 />
@@ -77,6 +83,6 @@ const VerifyEmail: React.FC = () => {
             </div>
         </div>
     );
-};
+}
 
 export default VerifyEmail; 
