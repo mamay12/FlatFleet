@@ -7,6 +7,8 @@ import Welcome from "./shared/Welcome.tsx";
 import RecoverPassword from "./password-recovery";
 import SetPasswordSuccess from "./password-recovery/SetPasswordSuccess.tsx";
 import StartScreenPage from "./StartScreen.tsx";
+import BuildingLocation from "./BuildingLocation.tsx";
+import AccountTypeSelector from "./AccountTypeSelector.tsx";
 import ChooseAccountTypePage from "./account";
 import SignInPage from "./sign-in";
 import SignUpPage from "./sign-up";
@@ -43,6 +45,14 @@ const Router: FC = () => {
                 <Route
                     path="/set-password-success"
                     element={<SetPasswordSuccess/>}
+                />
+                <Route
+                    path="/account-type"
+                    element={<AccountTypeSelector />}
+                />
+                <Route
+                    path="/building-location"
+                    element={<BuildingLocation />}
                 />
                 <Route
                     path='/login'
