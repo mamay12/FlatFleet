@@ -11,6 +11,8 @@ import SetPassword from "./SetPassword";
 import SetPasswordSuccess from "./SetPasswordSccess";
 import StartScreenPage from "./StartScreen.tsx";
 import SignUpPage from "./register";
+import BuildingLocation from "./BuildingLocation.tsx";
+import AccountTypeSelector from "./AccountTypeSelector.tsx";
 
 const ScrollToTop: FC<{ children: JSX.Element }> = ({children}) => {
     const location = useLocation();
@@ -52,6 +54,14 @@ const Router: FC = () => {
                 <Route
                     path="/set-password-success"
                     element={<SetPasswordSuccess />}
+                />
+                <Route
+                    path="/account-type"
+                    element={<AccountTypeSelector />}
+                />
+                <Route
+                    path="/building-location"
+                    element={<BuildingLocation />}
                 />
                 <Route
                     path='/login'
