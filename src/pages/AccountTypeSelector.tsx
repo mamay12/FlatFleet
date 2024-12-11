@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Button, Typography, Select } from 'antd';
-import { LeftOutlined } from '@ant-design/icons';
+import { LeftOutlined, SearchOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router';
 import '../styles/_accountTypeSelector.sass';
 
@@ -48,6 +48,7 @@ const AccountTypeSelector: React.FC = () => {
                     onChange={(value) => setSelectedType(value)}
                     options={accountTypes}
                     size="large"
+                    prefix={<SearchOutlined />}
                 />
 
                 <Button
