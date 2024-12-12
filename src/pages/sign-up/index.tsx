@@ -16,6 +16,7 @@ import {NavLink} from "react-router";
 import {useState} from "react";
 import PrivacyPolicy from "./PrivacyPolicy.tsx";
 import TermsOfService from "./TermsOfService.tsx";
+import { useUser } from "../../contexts/UserContext.tsx";
 
 const {Title, Text} = Typography;
 
@@ -27,22 +28,30 @@ interface Form {
 }
 
 const SignUpPage = () => {
+    const { setAuthenticated, updateUserData } = useUser();
+
     const onFinish = async (values: Form) => {
         const {fullName, email, password, phoneNumber} = values;
 
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            const user = userCredential.user
+            const user = userCredential.user;
 
             await setDoc(doc(db, "users", user.uid), {
                 fullname: fullName,
                 email: email,
                 password: password,
                 phone: phoneNumber
-            })
+            });
 
             await updateProfile(userCredential.user, {displayName: fullName});
 
+            updateUserData({
+                email,
+                fullName,
+                phone: phoneNumber
+            });
+            setAuthenticated(true);
             message.success("Account created successfully!");
         } catch (error) {
             console.error("Error during registration:", error);

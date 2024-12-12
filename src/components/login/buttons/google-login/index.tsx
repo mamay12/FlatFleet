@@ -2,21 +2,24 @@ import {GoogleOutlined} from "@ant-design/icons";
 import {Button} from "antd";
 import {signInWithPopup} from 'firebase/auth'
 import {auth, googleProvider} from "../../../../utils/firebase";
-import {useAuthContext} from "../../../../contexts/AuthContext.tsx";
+import { useUser } from '../../../../contexts/UserContext';
 
 function LoginWithGoogle() {
-    const {setUser} = useAuthContext()
+    const { setAuthenticated, updateUserData } = useUser();
 
     const handleGoogleLogin = async () => {
         try {
-            await signInWithPopup(auth, googleProvider);
-            setUser(auth.currentUser)
+            const result = await signInWithPopup(auth, googleProvider);
+            const user = result.user;
+            updateUserData({
+                email: user.email || '',
+                fullName: user.displayName || ''
+            });
+            setAuthenticated(true);
         } catch (error) {
             console.error("Error during login:", error);
         }
     };
-
-
 
     return (
         <Button
