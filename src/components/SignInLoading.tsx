@@ -1,6 +1,7 @@
 import {PropsWithChildren, useEffect, useState} from "react";
 import Loading from "../pages/shared/Loading.tsx";
 import Welcome from "../pages/shared/Welcome.tsx";
+import AuthFilter from "./account/AuthFilter.tsx";
 
 const SignInLoading = ({children}: PropsWithChildren<object>) => {
     const [stage, setStage] = useState("loading");
@@ -29,7 +30,7 @@ const SignInLoading = ({children}: PropsWithChildren<object>) => {
     }
 
 
-    return <>{children}</>;
+    return <AuthFilter>{children}</AuthFilter>;
 };
 
 export default SignInLoading;

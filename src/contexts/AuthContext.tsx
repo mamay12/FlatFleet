@@ -4,12 +4,12 @@ import {
     Dispatch,
     PropsWithChildren,
     SetStateAction,
-    useContext, useEffect,
+    useContext,
+    useEffect,
     useMemo,
     useState
 } from "react";
 import {useLocalStorage} from "usehooks-ts";
-import {useNavigate} from "react-router";
 
 interface AuthContext {
     user: UserInfo | null
@@ -28,21 +28,25 @@ Context.displayName = "Auth Context";
 
 export const useAuthContext = () => useContext(Context);
 
+const userStorageKey = 'user-storage'
+
 function AuthContextProvider({children}: PropsWithChildren<object>) {
     const [user, setUser] = useState<UserInfo | null>(null);
-    const [value, setValue] = useLocalStorage<UserInfo | null>('user-storage', null)
-    const navigate = useNavigate()
+    const [_, setValue] = useLocalStorage<UserInfo | null>(userStorageKey, null)
+
     useEffect(() => {
         if (user) {
             setValue(user)
         }
     }, [setValue, user]);
 
+
     useEffect(() => {
-        if(value){
-            navigate('/chooseType')
+        const storageInfo = localStorage.getItem(userStorageKey)
+        if (storageInfo) {
+            setUser(JSON.parse(storageInfo) as UserInfo)
         }
-    }, [navigate, value]);
+    }, []);
 
     const ctx: AuthContext = useMemo(() => ({
         user,

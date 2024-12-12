@@ -1,0 +1,51 @@
+@use "../../../vars" as *
+
+.upload-file-page
+  display: flex
+  flex-direction: column
+  justify-content: space-between
+  min-height: 100vh
+  max-width: 400px
+  margin: 0 auto
+  padding: 20px
+
+  .back
+    margin-bottom: 16px
+    color: $blue
+    justify-content: left
+
+  .title
+    text-align: center
+    margin-bottom: 16px
+
+    .dropzone
+      margin-bottom: 16px
+      border: 1px dashed $blue
+      border-radius: 8px
+      padding: 20px
+
+    .or-text
+      text-align: center
+      display: block
+      margin: 16px 0
+
+  .camera-button
+    margin-bottom: 24px
+    display: block
+    width: 100%
+
+    .list
+      margin-bottom: 24px
+
+      .ant-list-item
+        padding: 12px 0
+        border-bottom: 1px solid #f0f0f0
+
+      .ant-progress
+        width: 100%
+
+    .status
+      float: right
+
+    .submit
+      margin-top: 16px

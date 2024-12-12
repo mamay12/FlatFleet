@@ -1,10 +1,12 @@
 import SignInLoading from "../../components/SignInLoading.tsx";
+import {Button} from "antd";
+import {useNavigate} from "react-router";
 
 function ChooseAccountTypePage() {
-
+    const navigate = useNavigate()
     return (
         <SignInLoading>
-            <div>TBD</div>
+            <Button onClick={() => navigate('/account/management-company')}></Button>
         </SignInLoading>
     )
 }
