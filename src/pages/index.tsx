@@ -11,9 +11,8 @@ import BuildingLocation from "./BuildingLocation.tsx";
 import AccountTypeSelector from "./account/AccountTypeSelector.tsx";
 import SignInPage from "./sign-in";
 import SignUpPage from "./sign-up";
-import ManagementCompanyRegistration from "./account/management-company/steps/personal-info";
+import AddFilesData from "./account/management-company/steps/personal-info";
 import TenantOfHouseRegistration from "./account/tenant-registration";
-import HouseCommittee from "./account/house-committee";
 
 const ScrollToTop: FC<{ children: JSX.Element }> = ({children}) => {
     const location = useLocation();
@@ -62,14 +61,11 @@ const Router: FC = () => {
                         element={<NotFound/>}
                     />
                     <Route path="account-type" element={<AccountTypeSelector/>}/>
-                    <Route path="management-company" element={<ManagementCompanyRegistration/>}/>
+                    <Route path="management-company" element={<AddFilesData/>}/>
                     <Route path="tenant-of-house" element={<TenantOfHouseRegistration/>}/>
-                    <Route path="house-committee" element={<HouseCommittee/>}/>
+                    <Route path="house-committee" element={<BuildingLocation/>}/>
+                    <Route path="doubt" element={<AddFilesData/>}/>
                 </Route>
-                <Route
-                    path="/building-location"
-                    element={<BuildingLocation/>}
-                />
             </Routes>
         </ScrollToTop>
     )

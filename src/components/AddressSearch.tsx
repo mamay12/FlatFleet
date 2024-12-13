@@ -1,16 +1,20 @@
-import {AutoComplete, Button, Typography} from "antd";
+import {AutoComplete, Typography} from "antd";
 import {LoadingOutlined, SearchOutlined} from "@ant-design/icons";
-import {useEffect, useState} from "react";
+import {Dispatch, SetStateAction, useEffect, useState} from "react";
 import usePlacesService from "react-google-autocomplete/lib/usePlacesAutocompleteService";
-import {useNavigate} from "react-router";
 import GoogleMapPicker from "./GoogleMapPicker.tsx";
+import "@styles/account/_address-search.sass"
 
 const {Text} = Typography
 
 const API_KEY = "AIzaSyB4vfe1nYsVoGCdnZV1AGagrmzifTk0o80";
 
-function AddressSearch() {
-    const navigate = useNavigate()
+
+interface SearchProps {
+    setAddress: Dispatch<SetStateAction<string | undefined>>
+}
+
+function AddressSearch({setAddress}: SearchProps) {
     const [placeId, setPlaceId] = useState<string | null>(null);
     const [touched, setTouched] = useState(false);
     const [selectedPlace, setSelectedPlace] = useState<string>("");
@@ -22,10 +26,6 @@ function AddressSearch() {
     } = usePlacesService({
         apiKey: API_KEY,
     });
-
-    useEffect(() => {
-        console.log(`placeId: ${placeId}`)
-    }, [placeId])
 
     const handleSearch = (input: string) => {
         setPlaceId(null)
@@ -41,6 +41,10 @@ function AddressSearch() {
         setPlaceId(value)
         setSelectedPlace(option.label);
     };
+
+    useEffect(() => {
+        setAddress(selectedPlace)
+    }, [selectedPlace, setAddress]);
 
     return (
         <div className="content">
@@ -67,16 +71,7 @@ function AddressSearch() {
                     </AutoComplete>
                 </div>
             </div>
-            <Button
-                type="primary"
-                block
-                size="large"
-                disabled={!placeId}
-                onClick={() => navigate('/next-page')}
-                style={{marginTop: '24px'}}
-            >
-                Submit
-            </Button>
+
             {
                 !options.length && !placeId && touched
                     ? (

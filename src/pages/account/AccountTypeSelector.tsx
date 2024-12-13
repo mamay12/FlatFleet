@@ -1,8 +1,9 @@
-import { useState } from 'react';
-import { Button, Typography, Select } from 'antd';
-import { LeftOutlined, SearchOutlined } from '@ant-design/icons';
-import { useNavigate } from 'react-router';
-import '../../styles/_accountTypeSelector.sass';
+import {useState} from 'react';
+import {Button, Select, Typography} from 'antd';
+import {SearchOutlined} from '@ant-design/icons';
+import {useNavigate} from 'react-router';
+import '@styles/_accountTypeSelector.sass';
+import BackButton from "@components/BackButton.tsx";
 
 const { Title, Text } = Typography;
 
@@ -27,9 +28,7 @@ const AccountTypeSelector: React.FC = () => {
     return (
         <div className="account-type-selector">
             <div className="header">
-                <button className="back-button" onClick={() => navigate(-1)}>
-                    <LeftOutlined /> Back
-                </button>
+                <BackButton onClick={() => navigate(-1)}/>
             </div>
 
             <div className="content">

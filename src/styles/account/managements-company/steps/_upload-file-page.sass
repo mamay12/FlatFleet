@@ -9,6 +9,11 @@
   margin: 0 auto
   padding: 20px
 
+  .content
+    display: flex
+    align-items: center
+    gap: 8px
+
   .back
     margin-bottom: 16px
     color: $blue
@@ -18,16 +23,17 @@
     text-align: center
     margin-bottom: 16px
 
-    .dropzone
-      margin-bottom: 16px
-      border: 1px dashed $blue
-      border-radius: 8px
-      padding: 20px
+  .dropzone
+    margin-bottom: 16px
+    border: 1px dashed $blue
+    border-radius: 8px
+    padding: 20px
 
-    .or-text
-      text-align: center
-      display: block
-      margin: 16px 0
+  .or-text
+    text-align: center
+    display: flex
+    justify-content: center
+    margin: 16px 0
 
   .camera-button
     margin-bottom: 24px

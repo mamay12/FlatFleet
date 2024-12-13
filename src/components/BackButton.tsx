@@ -1,6 +1,6 @@
 import {Button} from "antd";
 import {ArrowLeftOutlined} from "@ant-design/icons";
-import '../styles/index.sass'
+import '@styles/index.sass'
 
 interface ButtonProps {
     onClick: () => void

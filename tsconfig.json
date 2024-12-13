@@ -1,8 +1,14 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "types": ["google.maps"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "types": [
+      "google.maps"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -28,9 +34,20 @@
     "incremental": true,
     "tsBuildInfoFile": "./.cache/.tsbuildinfo",
     "allowImportingTsExtensions": true,
+    "baseUrl": "./",
     "paths": {
-      "assets/*": ["./public/assets/*"],
+      "@assets/*": [
+        "./public/assets/*"
+      ],
+      "@styles/*": [
+        "./src/styles/*"
+      ],
+      "@components/*": [
+        "./src/components/*"
+      ]
     }
   },
-  "include": ["src"]
+  "include": [
+    "src"
+  ]
 }
