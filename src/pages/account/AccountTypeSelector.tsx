@@ -4,6 +4,7 @@ import {SearchOutlined} from '@ant-design/icons';
 import {useNavigate} from 'react-router';
 import '@styles/_accountTypeSelector.sass';
 import BackButton from "@components/BackButton.tsx";
+import { CircledIcon } from '@components/CircledIcon';
 
 const { Title, Text } = Typography;
 
@@ -32,9 +33,7 @@ const AccountTypeSelector: React.FC = () => {
             </div>
 
             <div className="content">
-                <div className="icon-container">
-                    <img src="/assets/account.svg" alt="Account" />
-                </div>
+                <CircledIcon src="/assets/account.svg" />
                 
                 <Title level={2}>Select account type</Title>
                 <Text className="description">
