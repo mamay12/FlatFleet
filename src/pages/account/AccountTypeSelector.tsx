@@ -1,16 +1,17 @@
-import { useState } from 'react';
-import { Button, Typography, Select } from 'antd';
-import { LeftOutlined, SearchOutlined } from '@ant-design/icons';
-import { useNavigate } from 'react-router';
-import '../styles/_accountTypeSelector.sass';
+import {useState} from 'react';
+import {Button, Select, Typography} from 'antd';
+import {SearchOutlined} from '@ant-design/icons';
+import {useNavigate} from 'react-router';
+import '@styles/_accountTypeSelector.sass';
+import BackButton from "@components/BackButton.tsx";
 
 const { Title, Text } = Typography;
 
 const accountTypes = [
-    { value: 'house_committee', label: 'House committee', url: "/onboarding" },
-    { value: 'management_company', label: 'Management company', url: "/onboarding2" },
-    { value: 'tenant', label: 'The tenant of the house', url: "/onboarding3" },
-    { value: 'doubt', label: 'Doubt', url: "/onboarding4" },
+    { value: 'house_committee', label: 'House committee', url: "/house-committee" },
+    { value: 'management_company', label: 'Management company', url: "/management-company" },
+    { value: 'tenant', label: 'The tenant of the house', url: "/tenant-of-house" },
+    { value: 'doubt', label: 'Doubt', url: "/doubt" },
 ];
 
 const AccountTypeSelector: React.FC = () => {
@@ -27,9 +28,7 @@ const AccountTypeSelector: React.FC = () => {
     return (
         <div className="account-type-selector">
             <div className="header">
-                <button className="back-button" onClick={() => navigate(-1)}>
-                    <LeftOutlined /> Back
-                </button>
+                <BackButton onClick={() => navigate(-1)}/>
             </div>
 
             <div className="content">
