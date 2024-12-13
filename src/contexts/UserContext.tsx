@@ -10,12 +10,22 @@ interface BuildingLocation {
     };
 }
 
+interface Floor {
+    number: number;
+    apartments: {
+        id: string;
+        number: number | null;
+        inhabitants: number | null;
+    }[];
+}
+
 interface UserData {
     email?: string;
     phone?: string;
     fullName?: string;
     accountType?: 'house_committee' | 'management_company' | 'tenant' | 'doubt';
     buildingLocation?: BuildingLocation;
+    floors?: Floor[];
 }
 
 interface UserContextType {
@@ -24,6 +34,9 @@ interface UserContextType {
     setAuthenticated: (value: boolean) => void;
     updateUserData: (data: Partial<UserData>) => void;
     clearUserData: () => void;
+    addFloor: (floor: Floor) => void;
+    updateFloor: (floorNumber: number, floorData: Floor) => void;
+    removeFloor: (floorNumber: number) => void;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -50,6 +63,29 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setUserData({});
     };
 
+    const addFloor = (floor: Floor) => {
+        setUserData(prevData => ({
+            ...prevData,
+            floors: [...(prevData.floors || []), floor]
+        }));
+    };
+
+    const updateFloor = (floorNumber: number, floorData: Floor) => {
+        setUserData(prevData => ({
+            ...prevData,
+            floors: (prevData.floors || []).map(floor => 
+                floor.number === floorNumber ? floorData : floor
+            )
+        }));
+    };
+
+    const removeFloor = (floorNumber: number) => {
+        setUserData(prevData => ({
+            ...prevData,
+            floors: (prevData.floors || []).filter(floor => floor.number !== floorNumber)
+        }));
+    };
+
     return (
         <UserContext.Provider 
             value={{
@@ -57,7 +93,10 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 userData,
                 setAuthenticated,
                 updateUserData,
-                clearUserData
+                clearUserData,
+                addFloor,
+                updateFloor,
+                removeFloor
             }}
         >
             {children}

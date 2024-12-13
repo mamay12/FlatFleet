@@ -1,118 +1,87 @@
-import { useState } from 'react';
-import { Button, Input, Select, Typography } from 'antd';
-import { CloseCircleOutlined } from '@ant-design/icons';
+import { Button, List, Typography } from 'antd';
+import { PlusOutlined, EditOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router';
 import BackButton from '@components/BackButton';
 import '../styles/_buildingDefinitions.sass';
+import { useUser } from 'src/contexts/UserContext';
+import { CircledIcon } from '@components/CircledIcon';
 
 const { Title, Text } = Typography;
 
-interface Apartment {
-  id: string;
-  number: string;
-  inhabitants: string;
-}
-
 const BuildingDefinitions = () => {
   const navigate = useNavigate();
-  const [selectedFloor, setSelectedFloor] = useState<string>('First floor');
-  const [apartments, setApartments] = useState<Apartment[]>([]);
+  const { userData, removeFloor } = useUser();
+  const floors = userData.floors || [];
 
-  const handleAddApartment = () => {
-    const newApartment = {
-      id: Date.now().toString(),
-      number: '',
-      inhabitants: ''
-    };
-    setApartments([...apartments, newApartment]);
+  const handleAddFloor = () => {
+    const nextFloorNumber = floors.length + 1;
+    navigate(`/floor-definition?floor=${nextFloorNumber}`);
   };
 
-  const handleRemoveApartment = (id: string) => {
-    setApartments(apartments.filter(apt => apt.id !== id));
+  const handleEditFloor = (floorNumber: number) => {
+    navigate(`/floor-definition?floor=${floorNumber}`);
   };
 
-  const handleApartmentChange = (id: string, field: keyof Apartment, value: string) => {
-    setApartments(apartments.map(apt => 
-      apt.id === id ? { ...apt, [field]: value } : apt
-    ));
-  };
-
-  const handleReset = () => {
-    setApartments([]);
-  };
-
-  const handleSubmit = () => {
-    // Handle submission logic here
-    console.log({ floor: selectedFloor, apartments });
-    navigate('/next-step');
+  const handleDeleteFloor = (floorNumber: number) => {
+    removeFloor(floorNumber);
   };
 
   return (
     <div className="building-definitions">
-        <div className='header'>
-            <BackButton onClick={() => navigate(-1)} />
-        </div>
-        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center'}}>
-            <Title level={2}>Building definitions</Title>
-            <Text className="description">
-                Please provide information about the apartments and residents on each floor
+      <div className='header'>
+        <BackButton onClick={() => navigate(-1)} />
+      </div>
+      <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center'}}>
+        <CircledIcon src="/assets/home.svg" />
+        <Title level={2} style={{marginTop: '14px'}}>Building definitions</Title>
+        <Text className="description">
+          Define the floors of your building and their apartments
         </Text>
-    </div>
-
-      <Select
-        value={selectedFloor}
-        onChange={setSelectedFloor}
-        className="floor-select"
-        size="large"
-        options={[
-          { value: 'First floor', label: 'First floor' },
-          { value: 'Second floor', label: 'Second floor' },
-          { value: 'Third floor', label: 'Third floor' },
-        ]}
-      />
-
-      {apartments.map((apartment) => (
-        <div key={apartment.id} className="apartment-row">
-          <Input
-            placeholder="Apartment"
-            value={apartment.number}
-            onChange={(e) => handleApartmentChange(apartment.id, 'number', e.target.value)}
-            className="apartment-input"
-          />
-          <Input
-            placeholder="Inhabitants"
-            value={apartment.inhabitants}
-            onChange={(e) => handleApartmentChange(apartment.id, 'inhabitants', e.target.value)}
-            className="inhabitants-input"
-          />
-          <CloseCircleOutlined 
-            onClick={() => handleRemoveApartment(apartment.id)}
-            className="remove-button"
-          />
-        </div>
-      ))}
-
-      <div className="actions-row">
-        <Button 
-          type="link" 
-          onClick={handleAddApartment}
-          icon={<span className="plus-icon">+</span>}
-        >
-          Add apartment
-        </Button>
-        <Button type="link" onClick={handleReset}>Reset</Button>
       </div>
 
-      <Text className="note">
-        Remember, the order of the added apartments will be preserved in the final plan of the house
-      </Text>
+      <List
+        className="floors-list"
+        dataSource={floors}
+        renderItem={(floor) => (
+          <List.Item
+            actions={[
+              <Button 
+                icon={<EditOutlined />} 
+                onClick={() => handleEditFloor(floor.number)}
+              />,
+              <Button 
+                danger
+                onClick={() => handleDeleteFloor(floor.number)}
+              >
+                Delete
+              </Button>
+            ]}
+          >
+            <List.Item.Meta
+              title={`Floor ${floor.number}`}
+              description={`${floor.apartments.length} apartments, ${floor.apartments.reduce((sum, apt) => sum + (apt.inhabitants || 0), 0)} inhabitants`}
+            />
+          </List.Item>
+        )}
+      />
+
+      <Button
+        type="dashed"
+        block
+        icon={<PlusOutlined />}
+        onClick={handleAddFloor}
+        className="add-floor-button"
+      >
+        Add Floor
+      </Button>
 
       <Button
         type="primary"
         block
         size="large"
-        onClick={handleSubmit}
+        onClick={() => navigate('/next-step')}
         className="submit-button"
+        disabled={floors.length === 0}
       >
         Submit
       </Button>

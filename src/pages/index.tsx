@@ -14,6 +14,7 @@ import SignUpPage from "./sign-up";
 import AddFilesData from "./account/management-company/steps/personal-info";
 import TenantOfHouseRegistration from "./account/tenant-registration";
 import BuildingDefinitions from "./BuildingDefinitions.tsx";
+import FloorDefinition from "./FloorDefinition.tsx";
 
 const ScrollToTop: FC<{ children: JSX.Element }> = ({children}) => {
     const location = useLocation();
@@ -78,8 +79,16 @@ const Router: FC = () => {
                         element={<AddFilesData/>}
                     />
                     <Route
+                        path="building-location"
+                        element={<BuildingLocation/>}
+                    />
+                    <Route
                         path="building-definitions"
                         element={<BuildingDefinitions/>}
+                    />
+                    <Route
+                        path="floor-definition"
+                        element={<FloorDefinition/>}
                     />
                     <Route
                         path="*"
