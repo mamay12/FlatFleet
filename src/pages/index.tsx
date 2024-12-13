@@ -57,14 +57,24 @@ const Router: FC = () => {
                         element={<SignUpPage/>}
                     />
                     <Route
+                        path="account-type"
+                        element={<AccountTypeSelector/>}/>
+                    <Route
+                        path="management-company"
+                        element={<AddFilesData/>}/>
+                    <Route
+                        path="tenant-of-house"
+                        element={<TenantOfHouseRegistration/>}/>
+                    <Route
+                        path="house-committee"
+                        element={<BuildingLocation/>}/>
+                    <Route
+                        path="doubt"
+                        element={<AddFilesData/>}/>
+                    <Route
                         path="*"
                         element={<NotFound/>}
                     />
-                    <Route path="account-type" element={<AccountTypeSelector/>}/>
-                    <Route path="management-company" element={<AddFilesData/>}/>
-                    <Route path="tenant-of-house" element={<TenantOfHouseRegistration/>}/>
-                    <Route path="house-committee" element={<BuildingLocation/>}/>
-                    <Route path="doubt" element={<AddFilesData/>}/>
                 </Route>
             </Routes>
         </ScrollToTop>
