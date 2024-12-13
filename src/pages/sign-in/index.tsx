@@ -7,7 +7,7 @@ import {signInWithEmailAndPassword} from "firebase/auth";
 import {auth, db} from "../../utils/firebase";
 import {doc, getDoc} from "firebase/firestore";
 import "../../styles/_sign-in.sass"
-import {useAuthContext} from "../../contexts/AuthContext.tsx";
+import { useUser } from "../../contexts/UserContext.tsx";
 
 import('../../styles/_vars.sass')
 
@@ -19,7 +19,7 @@ interface FormData {
 }
 
 const SignInPage = () => {
-    const {setUser} = useAuthContext()
+    const { setAuthenticated, updateUserData } = useUser();
 
     const handleLogin = async ({password, email}: FormData) => {
         try {
@@ -29,7 +29,11 @@ const SignInPage = () => {
             const userDoc = await getDoc(doc(db, "users", user.uid));
             if (userDoc.exists()) {
                 const userData = auth.currentUser;
-                setUser(userData)
+                updateUserData({
+                    email: userData?.email || '',
+                    fullName: userData?.displayName || ''
+                });
+                setAuthenticated(true);
                 message.success(`Welcome, ${userData?.displayName}!`);
             } else {
                 message.error("User not exists");

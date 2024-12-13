@@ -2,16 +2,16 @@ import {StrictMode} from 'react'
 import {createRoot} from 'react-dom/client'
 import {BrowserRouter} from "react-router";
 import Router from './pages/index.tsx';
+import { UserProvider } from './contexts/UserContext';
 
 import "./styles/index.sass";
-import AuthContext from "./contexts/AuthContext.tsx";
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
         <BrowserRouter>
-            <AuthContext>
+            <UserProvider>
                 <Router/>
-            </AuthContext>
+            </UserProvider>
         </BrowserRouter>
     </StrictMode>,
 )

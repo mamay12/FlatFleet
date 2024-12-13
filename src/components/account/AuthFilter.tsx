@@ -1,16 +1,17 @@
 import {PropsWithChildren} from "react";
-import {useAuthContext} from "../../contexts/AuthContext.tsx";
+
 import {useNavigate} from "react-router";
+import {useUser} from "../../contexts/UserContext.tsx";
 
 function AuthFilter({children}: PropsWithChildren<object>) {
-    const {user} = useAuthContext()
+    const {userData} = useUser()
     const navigate = useNavigate()
 
-    if (!user) {
+    if (!userData) {
         navigate('/login')
     }
 
-    return user ? children : null
+    return userData ? children : null
 }
 
 export default AuthFilter
