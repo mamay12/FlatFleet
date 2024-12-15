@@ -1,0 +1,119 @@
+@use "vars" as *
+
+.building-definitions
+  padding: 20px
+  display: flex
+  flex-direction: column
+  gap: 16px
+  height: 100vh
+  background: $white
+
+  h2
+    margin: 14px 0 8px 0
+    font-size: 24px
+    line-height: 32px
+
+  h3
+    margin: 0
+    font-size: 18px
+    line-height: 24px
+
+  .description
+    color: $gray-06
+    margin-bottom: 24px
+
+  .my-building
+    background: white
+    border-radius: 12px
+    padding: 16px
+    margin-top: 8px
+
+    .legend
+      display: flex
+      gap: 16px
+      margin: 12px 0
+      justify-content: center
+
+      .legend-item
+        display: flex
+        align-items: center
+        gap: 8px
+
+        .blue-box
+          width: 16px
+          height: 16px
+          background: rgba($blue-alt, 0.1)
+          border-radius: 4px
+
+        .purple-box
+          width: 16px
+          height: 16px
+          background: rgba($purple, 0.1)
+          border-radius: 4px
+
+    .floor-section
+      margin-bottom: 16px
+
+      .floor-header
+        display: flex
+        justify-content: space-between
+        align-items: center
+        margin-bottom: 12px
+        border-bottom: 1px solid $gray-03
+
+      .apartments-grid
+        display: grid
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr))
+        gap: 8px
+
+        .apartment-cell
+          position: relative
+          background: #DDEEFF
+          border-radius: 5px
+          padding: 8px
+          padding-right: 16px
+          min-height: 40px
+          display: flex
+          align-items: center
+          justify-content: center
+
+          .apartment-number
+            font-weight: 500
+
+          .inhabitants-number
+            position: absolute
+            top: 0px
+            right: 0px
+            font-weight: 600
+            background: #E3C8FE
+            color: $purple
+            border-top-right-radius: 5px
+            width: 24px
+            height: 20px
+            display: flex
+            align-items: center
+            justify-content: center
+            font-size: 12px
+
+  .add-floor-wrapper
+    display: flex
+    justify-content: center
+    padding-top: 16px
+    .add-floor-button
+      width: 56px
+      height: 56px
+      display: flex
+      align-items: center
+      justify-content: center
+
+    .plus-icon
+      font-size: 24px
+      font-weight: bold
+
+  .submit-button
+    margin-top: auto
+    position: fixed
+    bottom: 20px
+    left: 20px
+    right: 20px
+    width: calc(100% - 40px)

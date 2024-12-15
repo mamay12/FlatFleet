@@ -13,6 +13,8 @@ import SignInPage from "./sign-in";
 import SignUpPage from "./sign-up";
 import AddFilesData from "./account/management-company/steps/personal-info";
 import TenantOfHouseRegistration from "./account/tenant-registration";
+import BuildingDefinitions from "./BuildingDefinitions.tsx";
+import FloorDefinition from "./FloorDefinition.tsx";
 import FinalStatusCheck from "./final-status-check";
 
 const ScrollToTop: FC<{ children: JSX.Element }> = ({children}) => {
@@ -59,19 +61,36 @@ const Router: FC = () => {
                     />
                     <Route
                         path="account-type"
-                        element={<AccountTypeSelector/>}/>
+                        element={<AccountTypeSelector/>}
+                    />
                     <Route
                         path="management-company"
-                        element={<AddFilesData/>}/>
+                        element={<AddFilesData/>}
+                    />
                     <Route
                         path="tenant-of-house"
-                        element={<TenantOfHouseRegistration/>}/>
+                        element={<TenantOfHouseRegistration/>}
+                    />
                     <Route
                         path="house-committee"
-                        element={<BuildingLocation/>}/>
+                        element={<BuildingLocation/>}
+                    />
                     <Route
                         path="doubt"
-                        element={<AddFilesData/>}/>
+                        element={<AddFilesData/>}
+                    />
+                    <Route
+                        path="building-location"
+                        element={<BuildingLocation/>}
+                    />
+                    <Route
+                        path="building-definitions"
+                        element={<BuildingDefinitions/>}
+                    />
+                    <Route
+                        path="floor-definition"
+                        element={<FloorDefinition/>}
+                    />
                     <Route
                         path="final-status-check"
                         element={<FinalStatusCheck/>}/>
