@@ -41,7 +41,6 @@ function FlatFleetUpload({files, setFiles}: Readonly<FlatFleetUploadProps>) {
         beforeUpload: () => false
     }
 
-
     return (
         <div className="attach">
             <Text>Attach documents providing your status</Text>
@@ -53,6 +52,7 @@ function FlatFleetUpload({files, setFiles}: Readonly<FlatFleetUploadProps>) {
             <Text
                 className="upload-text">{`${totalUploadedFilesCount(files)}/${totalUploadedFilesCount(files)} files ready`}</Text>
         </div>
+
     )
 }
 

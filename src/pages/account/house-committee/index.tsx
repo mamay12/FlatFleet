@@ -5,12 +5,19 @@ import {CircledIcon} from '@components/CircledIcon.tsx';
 import GoogleAddressSearch from "@components/GoogleAddressSearch.tsx";
 import BackButton from "@components/BackButton.tsx";
 import {useState} from "react";
+import {useUser} from "../../../contexts/UserContext.tsx";
 
 const {Text, Title} = Typography;
 
 const HouseCommittee: React.FC = () => {
     const navigate = useNavigate();
     const [address, setAddress] = useState<string>();
+    const {updateHouseCommittee} = useUser()
+
+    const handleSubmit = () => {
+        updateHouseCommittee(address)
+        navigate('/building-definitions')
+    }
 
     return (
         <div className="building-location">
@@ -28,7 +35,7 @@ const HouseCommittee: React.FC = () => {
                 block
                 size="large"
                 disabled={!address}
-                onClick={() => navigate('/building-definitions')}
+                onClick={handleSubmit}
                 style={{marginTop: '24px'}}
             >
                 Submit

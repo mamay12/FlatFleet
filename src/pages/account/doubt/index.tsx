@@ -1,28 +1,31 @@
-import {Button, Input, Typography} from 'antd';
-import "@styles/account/managements-company/steps/_personal-info.sass"
-import {useNavigate} from "react-router";
-import ApartmentLogo from "@components/account/ApartmentLogo.tsx";
 import {useState} from "react";
-import UploadFiles from "../../../../upload-files";
 import {UploadFileStructure} from "@components/account/upload-files/types.ts";
 import BackButton from "@components/BackButton.tsx";
-import AccountIcon from "@assets/account.svg"
+import AccountIcon from "@assets/account.svg";
+import {Button, Divider, Select, Typography} from "antd";
 import FlatFleetUpload from "@components/account/upload-files/FlatFleetUpload.tsx";
-import {useUser} from "../../../../../contexts/UserContext.tsx";
+import {useNavigate} from "react-router";
+import UploadFiles from "../../upload-files";
+import {useUser} from "../../../contexts/UserContext.tsx";
 
-const {Title, Text} = Typography;
+const {Text, Title} = Typography
 
+const professions = [
+    {label: 'Profession 1', value: 'profession1' },
+    {label: 'Profession 2', value: 'profession2' },
+    {label: 'Profession 3', value: 'profession3' },
+]
 
-const AddFilesData = () => {
-    const [name, setName] = useState("")
+function Doubt() {
     const [files, setFiles] = useState<UploadFileStructure>({});
-    const [completed, setCompleted] = useState(false);
+    const [profession, setProfession] = useState<string>();
     const navigate = useNavigate()
-    const {updateManagementCompany, updateFiles} = useUser()
+    const [completed, setCompleted] = useState(false);
+    const {updateFiles, updateDoubt} = useUser()
 
     const handleConfirm = () => {
         setCompleted(true)
-        updateManagementCompany({companyName: name})
+        updateDoubt({profession})
     }
 
     if (completed) {
@@ -49,21 +52,23 @@ const AddFilesData = () => {
                     Fill in the fields with personal information
                 </Text>
 
-                <Input
+                <Select
                     size="large"
-                    placeholder="Company Name"
-                    prefix={<ApartmentLogo/>}
+                    placeholder="Your profession"
+                    style={{width:'100%'}}
                     className="input"
-                    onChange={(e) => setName(e.target.value)}
-                    value={name}
+                    options={professions}
+                    onChange={(e) => setProfession(e)}
+                    value={profession}
                 />
+                <Divider type="horizontal"/>
                 <FlatFleetUpload files={files} setFiles={setFiles}/>
             </div>
             <Button type="primary" block size="large" className="submit" onClick={handleConfirm}>
                 Complete onboarding
             </Button>
         </div>
-    );
-};
+    )
+}
 
-export default AddFilesData;
+export default Doubt

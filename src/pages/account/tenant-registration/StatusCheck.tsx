@@ -5,7 +5,8 @@ import {Button, Typography} from "antd";
 import FlatFleetUpload from "@components/account/upload-files/FlatFleetUpload.tsx";
 import {useState} from "react";
 import {UploadFileStructure} from "@components/account/upload-files/types.ts";
-import UploadFiles from "../management-company/steps/upload-files";
+import UploadFiles from "../../upload-files";
+import {useUser} from "../../../contexts/UserContext.tsx";
 
 const {Title, Text, Link} = Typography
 
@@ -16,17 +17,22 @@ interface StatusCheckProps {
 function StatusCheck({handleBackClick}: Readonly<StatusCheckProps>) {
     const [files, setFiles] = useState<UploadFileStructure>({})
     const [completed, setCompleted] = useState(false)
+    const {updateFiles} = useUser()
 
-    const handleSubmit = () => setCompleted(true)
+    const handleSubmit = () => {
+        setCompleted(true);
+
+    }
 
     if (completed) {
         const handleBack = () => setCompleted(false)
 
-        return <UploadFiles files={files} handleBack={handleBack} setFiles={setFiles}/>
+        return <UploadFiles files={files} handleBack={handleBack} setFiles={setFiles}
+                            handleSubmit={() => updateFiles(files)}/>
     }
 
     return (
-        <div className="page">
+        <div className="status-check-page">
             <div className="content">
                 <div className="back">
                     <BackButton onClick={handleBackClick}/>
@@ -43,14 +49,12 @@ function StatusCheck({handleBackClick}: Readonly<StatusCheckProps>) {
             </div>
             <div className="footer">
                 <Button className="submit" onClick={handleSubmit} size="large">Complete onboarding</Button>
-
                 <Text type="secondary">
                     If your apartment was previously registered
                     <br/>in the system, but you cannot access the QR
                     <br/>code, send us an email
                 </Text>
                 <Link>Send Email</Link>
-
             </div>
         </div>
     )

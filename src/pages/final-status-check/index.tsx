@@ -1,11 +1,13 @@
-import {useEffect, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import {useNavigate} from "react-router";
 import BackButton from "@components/BackButton.tsx";
 import {Button, Divider, message, Select, Typography} from "antd";
 import {SearchOutlined} from "@ant-design/icons";
 import "@styles/_status-check.sass"
 import {UploadFileStructure} from "@components/account/upload-files/types.ts";
-import UploadFiles from "../account/management-company/steps/upload-files";
+import UploadFiles from "../upload-files";
+import FirstTenant from "./first-tenant";
+import {useUser} from "../../contexts/UserContext.tsx";
 import FlatFleetUpload from "@components/account/upload-files/FlatFleetUpload.tsx";
 import ElectedByVote from "./elected-by-vote";
 
@@ -26,6 +28,7 @@ function FinalStatusCheck() {
     const [files, setFiles] = useState<UploadFileStructure>({})
     const [documentsExistsCompleted, setDocumentsExistsCompleted] = useState(false)
 
+    const {updateFiles} = useUser()
 
     const handleSubmit = () => {
         if (stepCompleted) {
@@ -34,17 +37,6 @@ function FinalStatusCheck() {
         }
         setSubmitedType(selectedType)
     };
-
-    const handleCompleted = () => {
-        if (stepCompleted) {
-            message.success('Onboarding completed')
-            return
-        }
-        if (selectedType === "document") {
-            setDocumentsExistsCompleted(true)
-        }
-        setStepCompleted(true)
-    }
 
     useEffect(() => {
         if (selectedType !== submitedType) {
@@ -57,20 +49,56 @@ function FinalStatusCheck() {
                             handleSubmit={() => {
                                 setDocumentsExistsCompleted(false);
                                 setStepCompleted(true)
+                                updateFiles(files)
                             }}/>
     }
 
-    const SwitchContent = () => {
+    const SwitchContent = () => useMemo(() => {
         switch (submitedType) {
             case "document": {
-                return <FlatFleetUpload files={files} setFiles={setFiles}/>
+                return <FlatFleetUpload
+                    files={files}
+                    setFiles={setFiles}/>
             }
             case "first-tenant": {
-                return <Text type='secondary' style={{textAlign: "center"}}>The system will check if you are the
-                    only tenant of</Text>
+                return <FirstTenant/>
             }
             case "elected-by-vote": {
-                return <ElectedByVote/>
+                return <ElectedByVote submitedType={submitedType} selectedType={selectedType}/>
+            }
+            default: {
+                return null
+            }
+        }
+    }, [])
+
+    const SubmitButton = () => {
+        switch (submitedType) {
+            case "document": {
+                return <Button
+                    type="primary"
+                    block
+                    size="large"
+                    disabled={!selectedType}
+                    onClick={() => {
+                        handleSubmit()
+                        if (!stepCompleted) {
+                            setDocumentsExistsCompleted(true)
+                        }
+                    }}
+                >
+                    Submit
+                </Button>
+            }
+            case "first-tenant": {
+                return <Button
+                    type="primary"
+                    block
+                    size="large"
+                    disabled={!selectedType}
+                >
+                    Submit
+                </Button>
             }
             default: {
                 return null
@@ -113,25 +141,17 @@ function FinalStatusCheck() {
                     marginTop: 10,
                     padding: 1
                 }}/>
+                <SwitchContent/>
             </div>
-            <SwitchContent/>
             <div style={{
                 position: "absolute",
                 left: "10px",
                 right: "10px",
                 bottom: "10px"
             }}>
-                {submitedType === selectedType ?
-                    <Button
-                        type="primary"
-                        block
-                        size="large"
-                        disabled={!submitedType}
-                        onClick={handleCompleted}>
-                        Complete onboarding
-                    </Button>
-                    :
-                    <Button
+                {submitedType && selectedType && submitedType === selectedType ?
+                    <SubmitButton/>
+                    : <Button
                         type="primary"
                         block
                         size="large"
@@ -140,7 +160,6 @@ function FinalStatusCheck() {
                     >
                         Submit
                     </Button>
-
                 }
             </div>
         </div>

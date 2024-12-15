@@ -1,14 +1,6 @@
 import React, {createContext, useContext} from 'react';
 import {useLocalStorage} from 'usehooks-ts';
-
-interface BuildingLocation {
-    placeId: string;
-    address: string;
-    coordinates: {
-        lat: number;
-        lng: number;
-    };
-}
+import {UploadFileStructure} from "@components/account/upload-files/types.ts";
 
 interface Floor {
     number: number;
@@ -19,13 +11,34 @@ interface Floor {
     }[];
 }
 
+interface ManagementCompanyData {
+    companyName: string
+}
+
+interface TenantData{
+    apartmentNo?: number;
+}
+
+interface DoubtData{
+    profession?: string
+}
+
+interface ElectedByVote{
+    emails?: string[]
+}
+
 interface UserData {
     email?: string;
     phone?: string;
     fullName?: string;
     accountType?: 'house_committee' | 'management_company' | 'tenant' | 'doubt';
-    buildingLocation?: BuildingLocation;
+    buildingLocation?: string;
     floors?: Floor[];
+    files?: UploadFileStructure
+    managementCompany?: ManagementCompanyData
+    tenant?: TenantData
+    doubt?: DoubtData
+    electedByVote?: ElectedByVote
 }
 
 interface UserContextType {
@@ -37,11 +50,17 @@ interface UserContextType {
     addFloor: (floor: Floor) => void;
     updateFloor: (floorNumber: number, floorData: Floor) => void;
     removeFloor: (floorNumber: number) => void;
+    updateHouseCommittee: (address?: string) => void;
+    updateFiles: (files?: UploadFileStructure) => void;
+    updateManagementCompany: (managementCompany: ManagementCompanyData) => void;
+    updateTenant: (tenant: TenantData) => void;
+    updateDoubt: (doubt: DoubtData) => void;
+    updateElectedByVote: (data: ElectedByVote) => void;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
-export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const UserProvider: React.FC<{ children: React.ReactNode }> = ({children}) => {
     const [isAuthenticated, setIsAuthenticated] = useLocalStorage('isAuthenticated', false);
     const [userData, setUserData] = useLocalStorage<UserData>('userData', {});
 
@@ -74,7 +93,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const updateFloor = (floorNumber: number, floorData: Floor) => {
         setUserData(prevData => ({
             ...prevData,
-            floors: (prevData.floors || []).map(floor => 
+            floors: (prevData.floors || []).map(floor =>
                 floor.number === floorNumber ? floorData : floor
             )
         }));
@@ -87,8 +106,32 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }));
     };
 
+    const updateHouseCommittee = (address?: string) => {
+        setUserData((prev) => ({...prev, buildingLocation: address}))
+    }
+
+    const updateFiles = (files?: UploadFileStructure) => {
+        setUserData((prev) => ({...prev, files}))
+    }
+
+    const updateManagementCompany = (managementCompanyData: ManagementCompanyData) => {
+        setUserData((prevState) => ({...prevState, managementCompanyData}))
+    }
+
+    const updateTenant = (tenantData: TenantData) => {
+        setUserData((prevState) => ({...prevState, tenant: tenantData}))
+    }
+
+    const updateDoubt = (doubt: DoubtData) => {
+        setUserData((prevState) => ({...prevState, doubt: doubt }))
+    }
+
+    const updateElectedByVote = (data: ElectedByVote) => {
+        setUserData((prevState) => ({...prevState, electedByVote:data}))
+    }
+
     return (
-        <UserContext.Provider 
+        <UserContext.Provider
             value={{
                 isAuthenticated,
                 userData,
@@ -97,7 +140,13 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 clearUserData,
                 addFloor,
                 updateFloor,
-                removeFloor
+                removeFloor,
+                updateHouseCommittee,
+                updateFiles,
+                updateManagementCompany,
+                updateTenant,
+                updateDoubt,
+                updateElectedByVote
             }}
         >
             {children}

@@ -1,4 +1,4 @@
-const NotFoundPage: React.FC<{}> = () => {
+const NotFoundPage: React.FC = () => {
     return (
         <div className="page-wrapper">
             <div className="container">

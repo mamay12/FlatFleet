@@ -7,12 +7,13 @@ import QRCodeScanner from "./QRCodeScanner.tsx";
 import AccountIcon from "@assets/account.svg";
 import GoogleAddressSearch from "@components/GoogleAddressSearch.tsx";
 import StatusCheck from "./StatusCheck.tsx";
+import {useUser} from "../../../contexts/UserContext.tsx";
 
 function TenantOfHouseRegistration() {
     const [address, setAddress] = useState<string>();
     const [apartmentNumber, setApartmentNumber] = useState<number>();
     const [statusCheckOpen, setStatusCheckOpen] = useState<boolean>(false);
-
+    const {updateTenant, updateUserData} = useUser()
     const [qrOpen, setQrOpen] = useState(false);
 
     const navigate = useNavigate()
@@ -21,6 +22,8 @@ function TenantOfHouseRegistration() {
 
     const handleSubmit = () => {
         setStatusCheckOpen(true)
+        updateTenant({apartmentNo: apartmentNumber})
+        updateUserData({buildingLocation: address})
     }
 
     return statusCheckOpen ?

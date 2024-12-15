@@ -1,7 +1,7 @@
 import {Button, Input, Typography} from 'antd';
 import {LeftOutlined, MailOutlined} from '@ant-design/icons';
 import {useNavigate} from 'react-router';
-import {CircledIcon} from '../../components/CircledIcon.tsx';
+import {CircledIcon} from '@components/CircledIcon.tsx';
 
 import "../../styles/_recoverPassword.sass";
 import {useState} from 'react';
