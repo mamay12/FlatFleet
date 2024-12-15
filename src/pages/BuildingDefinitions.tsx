@@ -1,5 +1,5 @@
-import { Button, List, Typography } from 'antd';
-import { PlusOutlined, EditOutlined } from '@ant-design/icons';
+import { Button, Typography } from 'antd';
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router';
 import BackButton from '@components/BackButton';
 import '../styles/_buildingDefinitions.sass';
@@ -33,48 +33,61 @@ const BuildingDefinitions = () => {
       </div>
       <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center'}}>
         <CircledIcon src="/assets/home.svg" />
-        <Title level={2} style={{marginTop: '14px'}}>Building definitions</Title>
+        <Title level={2}>Building definitions</Title>
         <Text className="description">
-          Define the floors of your building and their apartments
+          Create the floors of your building and fill them with apartments
         </Text>
       </div>
 
-      <List
-        className="floors-list"
-        dataSource={floors}
-        renderItem={(floor) => (
-          <List.Item
-            actions={[
+      <div className="my-building">
+        <Title level={3} style={{textAlign: "center"}}>My building</Title>
+        <div className="legend">
+          <div className="legend-item">
+            <div className="blue-box"></div>
+            <Text>Apartment number</Text>
+          </div>
+          <div className="legend-item">
+            <div className="purple-box"></div>
+            <Text>Number of residents</Text>
+          </div>
+        </div>
+
+        {floors.map((floor) => (
+          <div key={floor.number} className="floor-section">
+            <div className="floor-header">
+              <Text strong style={{flexGrow: 1}}>{`${floor.number}${getOrdinalSuffix(floor.number)} Floor`}</Text>
               <Button 
-                icon={<EditOutlined />} 
+                type="text"
+                icon={<EditOutlined />}
                 onClick={() => handleEditFloor(floor.number)}
-              />,
+              />
               <Button 
-                danger
+                type="text"
+                icon={<DeleteOutlined />}
                 onClick={() => handleDeleteFloor(floor.number)}
-              >
-                Delete
-              </Button>
-            ]}
-          >
-            <List.Item.Meta
-              title={`Floor ${floor.number}`}
-              description={`${floor.apartments.length} apartments, ${floor.apartments.reduce((sum, apt) => sum + (apt.inhabitants || 0), 0)} inhabitants`}
-            />
-          </List.Item>
-        )}
-      />
-
-      <Button
-        type="dashed"
-        block
-        icon={<PlusOutlined />}
-        onClick={handleAddFloor}
-        className="add-floor-button"
-      >
-        Add Floor
-      </Button>
-
+              />
+            </div>
+            <div className="apartments-grid">
+              {floor.apartments.map((apt) => (
+                <div key={apt.id} className="apartment-cell">
+                  <div className="apartment-number">{apt.number}</div>
+                  <div className="inhabitants-number">{apt.inhabitants}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+        <div className='add-floor-wrapper'>
+          <Button
+            type="primary"
+            shape="circle"
+            size="large"
+            onClick={handleAddFloor}
+            className="add-floor-button"
+            icon={<span className="plus-icon">+</span>}
+          />
+        </div>
+      </div>
       <Button
         type="primary"
         block
@@ -87,6 +100,15 @@ const BuildingDefinitions = () => {
       </Button>
     </div>
   );
+};
+
+const getOrdinalSuffix = (num: number): string => {
+  const j = num % 10;
+  const k = num % 100;
+  if (j === 1 && k !== 11) return 'st';
+  if (j === 2 && k !== 12) return 'nd';
+  if (j === 3 && k !== 13) return 'rd';
+  return 'th';
 };
 
 export default BuildingDefinitions; 
