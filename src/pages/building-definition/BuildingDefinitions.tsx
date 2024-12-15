@@ -1,10 +1,10 @@
-import { Button, Typography } from 'antd';
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import { useNavigate } from 'react-router';
-import BackButton from '@components/BackButton';
-import '../styles/_buildingDefinitions.sass';
-import { useUser } from 'src/contexts/UserContext';
-import { CircledIcon } from '@components/CircledIcon';
+import {Button, Typography} from 'antd';
+import {DeleteOutlined, EditOutlined} from '@ant-design/icons';
+import {useNavigate} from 'react-router';
+import BackButton from '@components/BackButton.tsx';
+import '@styles/building-definitions/_buildingDefinitions.sass';
+import {useUser} from '../../contexts/UserContext.tsx';
+import {CircledIcon} from '@components/CircledIcon.tsx';
 
 const { Title, Text } = Typography;
 
@@ -92,7 +92,7 @@ const BuildingDefinitions = () => {
         type="primary"
         block
         size="large"
-        onClick={() => navigate('/next-step')}
+        onClick={() => navigate('/final-status-check')}
         className="submit-button"
         disabled={floors.length === 0}
       >

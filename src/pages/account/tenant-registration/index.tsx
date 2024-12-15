@@ -5,7 +5,7 @@ import '@styles/account/tenant-registration/_tenant-of-house.sass'
 import {useState} from "react";
 import QRCodeScanner from "./QRCodeScanner.tsx";
 import AccountIcon from "@assets/account.svg";
-import AddressSearch from "@components/AddressSearch.tsx";
+import GoogleAddressSearch from "@components/GoogleAddressSearch.tsx";
 import StatusCheck from "./StatusCheck.tsx";
 
 function TenantOfHouseRegistration() {
@@ -46,7 +46,7 @@ function TenantOfHouseRegistration() {
                         <Form.Item
                             name="location"
                         >
-                            <AddressSearch setAddress={setAddress}/>
+                            <GoogleAddressSearch setAddress={setAddress}/>
                         </Form.Item>
 
                         <Form.Item

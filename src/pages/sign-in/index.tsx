@@ -2,12 +2,13 @@ import {Button, Checkbox, Divider, Form, Input, message, Space, Typography} from
 import {LockOutlined, MailOutlined,} from "@ant-design/icons";
 import HeaderImage from "../../components/login/HeaderImage.tsx";
 import LoginWithButtons from "../../components/login/buttons/LoginWithButtons.tsx";
-import {NavLink} from "react-router";
+import {NavLink, useNavigate} from "react-router";
 import {signInWithEmailAndPassword} from "firebase/auth";
 import {auth, db} from "../../utils/firebase";
 import {doc, getDoc} from "firebase/firestore";
-import "../../styles/_sign-in.sass"
+import "@styles/sign-in/_sign-in.sass"
 import { useUser } from "../../contexts/UserContext.tsx";
+import {useEffect} from "react";
 
 import('../../styles/_vars.sass')
 
@@ -35,6 +36,7 @@ const SignInPage = () => {
                 });
                 setAuthenticated(true);
                 message.success(`Welcome, ${userData?.displayName}!`);
+
             } else {
                 message.error("User not exists");
             }
@@ -43,6 +45,14 @@ const SignInPage = () => {
         }
     };
 
+    const {isAuthenticated} = useUser()
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if(isAuthenticated){
+            navigate('/account-type')
+        }
+    }, [isAuthenticated, navigate]);
 
     return (
         <>

@@ -3,7 +3,7 @@ import {useNavigate} from "react-router";
 import BackButton from "@components/BackButton.tsx";
 import {Button, Divider, message, Select, Typography} from "antd";
 import {SearchOutlined} from "@ant-design/icons";
-import "@styles/account/tenant-registration/_status-check.sass"
+import "@styles/_status-check.sass"
 import {UploadFileStructure} from "@components/account/upload-files/types.ts";
 import UploadFiles from "../account/management-company/steps/upload-files";
 import FlatFleetUpload from "@components/account/upload-files/FlatFleetUpload.tsx";

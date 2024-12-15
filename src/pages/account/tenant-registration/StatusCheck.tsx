@@ -1,4 +1,4 @@
-import "@styles/account/tenant-registration/_status-check.sass"
+import "@styles/_status-check.sass"
 import BackButton from "@components/BackButton.tsx";
 import StatusCheckIcon from "@assets/status-check-icon.svg"
 import {Button, Typography} from "antd";

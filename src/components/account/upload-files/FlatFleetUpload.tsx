@@ -4,7 +4,7 @@ import {totalUploadedFilesCount} from "@components/account/upload-files/totalUpl
 import {Dispatch, SetStateAction} from "react";
 import {UploadFileStructure} from "@components/account/upload-files/types.ts";
 import {UploadChangeParam} from "antd/es/upload/interface";
-import "@styles/_flat-fleet-upload.sass"
+import "@styles/upload/_flat-fleet-upload.sass"
 
 const {Text} = Typography
 

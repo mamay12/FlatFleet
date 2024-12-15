@@ -3,7 +3,7 @@ import {LoadingOutlined, SearchOutlined} from "@ant-design/icons";
 import {Dispatch, SetStateAction, useEffect, useState} from "react";
 import usePlacesService from "react-google-autocomplete/lib/usePlacesAutocompleteService";
 import GoogleMapPicker from "./GoogleMapPicker.tsx";
-import "@styles/account/_address-search.sass"
+import "@styles/_google-address-search.sass"
 
 const {Text} = Typography
 
@@ -14,7 +14,7 @@ interface SearchProps {
     setAddress: Dispatch<SetStateAction<string | undefined>>
 }
 
-function AddressSearch({setAddress}: SearchProps) {
+function GoogleAddressSearch({setAddress}: Readonly<SearchProps>) {
     const [placeId, setPlaceId] = useState<string | null>(null);
     const [touched, setTouched] = useState(false);
     const [selectedPlace, setSelectedPlace] = useState<string>("");
@@ -93,4 +93,4 @@ function AddressSearch({setAddress}: SearchProps) {
     )
 }
 
-export default AddressSearch
+export default GoogleAddressSearch

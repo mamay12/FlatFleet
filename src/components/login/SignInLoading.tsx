@@ -1,7 +1,7 @@
 import {PropsWithChildren, useEffect, useState} from "react";
-import Loading from "../pages/shared/Loading.tsx";
-import Welcome from "../pages/shared/Welcome.tsx";
-import { useUser } from '../contexts/UserContext';
+import Loading from "../../pages/Loading.tsx";
+import Welcome from "../../pages/Welcome.tsx";
+import { useUser } from '../../contexts/UserContext.tsx';
 import { Navigate } from 'react-router';
 
 const SignInLoading = ({children}: PropsWithChildren<object>) => {

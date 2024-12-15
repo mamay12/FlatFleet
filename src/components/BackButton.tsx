@@ -1,5 +1,5 @@
 import {Button} from "antd";
-import {ArrowLeftOutlined} from "@ant-design/icons";
+import {LeftOutlined} from "@ant-design/icons";
 import '@styles/index.sass'
 
 interface ButtonProps {
@@ -10,7 +10,7 @@ const BackButton = ({onClick}: ButtonProps) => {
     return (
         <Button
             type="text"
-            icon={<ArrowLeftOutlined/>}
+            icon={<LeftOutlined/>}
             className="back-button"
             onClick={onClick}
         >

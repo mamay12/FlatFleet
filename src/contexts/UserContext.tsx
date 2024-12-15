@@ -1,5 +1,5 @@
-import React, { createContext, useContext } from 'react';
-import { useLocalStorage } from 'usehooks-ts';
+import React, {createContext, useContext} from 'react';
+import {useLocalStorage} from 'usehooks-ts';
 
 interface BuildingLocation {
     placeId: string;
@@ -44,6 +44,7 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useLocalStorage('isAuthenticated', false);
     const [userData, setUserData] = useLocalStorage<UserData>('userData', {});
+
 
     const setAuthenticated = (value: boolean) => {
         setIsAuthenticated(value);

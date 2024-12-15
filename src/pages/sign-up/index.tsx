@@ -8,7 +8,7 @@ import {
     UserOutlined,
 } from "@ant-design/icons";
 import HeaderImage from "../../components/login/HeaderImage.tsx";
-import "../../styles/_sign-up.sass"
+import "@styles/sign-up/_sign-up.sass"
 import {createUserWithEmailAndPassword, updateProfile} from "firebase/auth";
 import {auth, db} from "../../utils/firebase";
 import {doc, setDoc} from "firebase/firestore";

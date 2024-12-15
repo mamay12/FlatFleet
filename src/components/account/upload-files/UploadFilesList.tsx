@@ -1,7 +1,23 @@
 import {List, Space, Typography} from "antd";
 import DirectoryLogo from "./DirectoryLogo.tsx";
 import {UploadFileStructure} from "./types.ts";
-import FileItem from "./FileItem.tsx";
+import {CloseOutlined} from "@ant-design/icons";
+
+interface FileItemProps {
+    directory: string
+    filename: string
+    handleRemove: (directory: string, filename: string) => void
+}
+
+function FileItem({filename, directory, handleRemove}: Readonly<FileItemProps>) {
+    return (
+        <div style={{display: "flex", justifyContent: "space-between"}}>
+            <Typography.Text>{filename}</Typography.Text>
+            <CloseOutlined style={{cursor: "pointer", color: "red"}}
+                           onClick={() => handleRemove(directory, filename)}/>
+        </div>
+    );
+}
 
 interface Props {
     files: UploadFileStructure

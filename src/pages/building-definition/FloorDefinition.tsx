@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import { Button, InputNumber, Typography, Select } from 'antd';
 import { CloseCircleOutlined } from '@ant-design/icons';
 import { useNavigate, useLocation } from 'react-router';
-import BackButton from '@components/BackButton';
-import '../styles/_floorDefinition.sass';
-import { useUser } from 'src/contexts/UserContext';
+import BackButton from '@components/BackButton.tsx';
+import '@styles/building-definitions/_floorDefinition.sass';
+import { useUser } from '../../contexts/UserContext.tsx';
 
 const { Title, Text } = Typography;
 
