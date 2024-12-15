@@ -13,6 +13,7 @@ import SignInPage from "./sign-in";
 import SignUpPage from "./sign-up";
 import AddFilesData from "./account/management-company/steps/personal-info";
 import TenantOfHouseRegistration from "./account/tenant-registration";
+import FinalStatusCheck from "./final-status-check";
 
 const ScrollToTop: FC<{ children: JSX.Element }> = ({children}) => {
     const location = useLocation();
@@ -71,6 +72,9 @@ const Router: FC = () => {
                     <Route
                         path="doubt"
                         element={<AddFilesData/>}/>
+                    <Route
+                        path="final-status-check"
+                        element={<FinalStatusCheck/>}/>
                     <Route
                         path="*"
                         element={<NotFound/>}
