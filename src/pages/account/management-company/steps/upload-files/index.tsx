@@ -13,9 +13,10 @@ interface Props {
     files: UploadFileStructure
     setFiles: Dispatch<SetStateAction<UploadFileStructure>>
     handleBack: () => void
+    handleSubmit?: () => void
 }
 
-const UploadFilesPage = ({files, setFiles, handleBack}: Props) => {
+const UploadFilesPage = ({files, setFiles, handleBack, handleSubmit}: Props) => {
     const handleRemove = (directory: string, fileName: string): void => {
         setFiles((prev) => {
             const updatedStructure = {...prev};
@@ -79,7 +80,7 @@ const UploadFilesPage = ({files, setFiles, handleBack}: Props) => {
                     </div>
                 </div>
             </div>
-            <Button type="primary" block className=".submit">
+            <Button type="primary" block className=".submit" onClick={handleSubmit}>
                 Submit
             </Button>
         </div>

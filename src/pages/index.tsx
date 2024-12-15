@@ -15,6 +15,7 @@ import AddFilesData from "./account/management-company/steps/personal-info";
 import TenantOfHouseRegistration from "./account/tenant-registration";
 import BuildingDefinitions from "./BuildingDefinitions.tsx";
 import FloorDefinition from "./FloorDefinition.tsx";
+import FinalStatusCheck from "./final-status-check";
 
 const ScrollToTop: FC<{ children: JSX.Element }> = ({children}) => {
     const location = useLocation();
@@ -90,6 +91,9 @@ const Router: FC = () => {
                         path="floor-definition"
                         element={<FloorDefinition/>}
                     />
+                    <Route
+                        path="final-status-check"
+                        element={<FinalStatusCheck/>}/>
                     <Route
                         path="*"
                         element={<NotFound/>}
